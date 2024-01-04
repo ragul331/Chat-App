@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1097709091709",
+    "project_id": "couplet-rk",
+    "storage_bucket": "couplet-rk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1097709091709:android:98e18468804b26d6bfea14",
+        "android_client_info": {
+          "package_name": "com.example.couplet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6Ct8chU78f6Ek1XStIKJBI2fvMITzD8w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
