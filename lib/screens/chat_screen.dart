@@ -16,40 +16,44 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  void send(Map currentuser, Map selectedUser) {
-    List sUserList = currentuser['chats'][widget.selectedNumber] ?? [];
-    List cuserList = selectedUser['chats'][auth.currentUser?.phoneNumber] ?? [];
-    List selectedUserList = [];
-    List currentuserList = [];
-    for (var ch in sUserList) {
-      selectedUserList.add(ch);
-    }
-    for (var ch in cuserList) {
-      currentuserList.add(ch);
-    }
-    selectedUserList.add([currentuser['phoneNumber'], msgController.text]);
-    currentuserList.add([currentuser['phoneNumber'], msgController.text]);
-    Map chats = selectedUser['chats'];
-    if (chats.containsKey(widget.selectedNumber)) {
-      selectedUser['chats'][auth.currentUser?.phoneNumber] = selectedUserList;
-      currentuser['chats'][widget.selectedNumber] = currentuserList;
-      Map<String, Object?> sMap = {widget.selectedNumber: selectedUser};
-      Map<String, Object?> cMap = {
-        auth.currentUser?.phoneNumber as String: currentuser
-      };
-      ref.update(cMap);
-      ref.update(sMap);
-      msgController.clear();
-    } else {
-      selectedUser['chats'][auth.currentUser?.phoneNumber] = selectedUserList;
-      currentuser['chats'][widget.selectedNumber] = currentuserList;
-      Map<String, Object?> sMap = {widget.selectedNumber: selectedUser};
-      Map<String, Object?> cMap = {
-        auth.currentUser?.phoneNumber as String: currentuser
-      };
-      ref.update(cMap);
-      ref.update(sMap);
-      msgController.clear();
+  void send(Map currentUser, Map selectedUser) {
+    if (msgController.text.isNotEmpty) {
+      List sUserList = currentUser['chats'][widget.selectedNumber] ?? [];
+
+      List cUserList =
+          selectedUser['chats'][auth.currentUser?.phoneNumber] ?? [];
+      List selectedUserList = [];
+      List currentUserList = [];
+      for (var ch in sUserList) {
+        selectedUserList.add(ch);
+      }
+      for (var ch in cUserList) {
+        currentUserList.add(ch);
+      }
+      selectedUserList.add([currentUser['phoneNumber'], msgController.text]);
+      currentUserList.add([currentUser['phoneNumber'], msgController.text]);
+      Map chats = selectedUser['chats'];
+      if (chats.containsKey(widget.selectedNumber)) {
+        selectedUser['chats'][auth.currentUser?.phoneNumber] = selectedUserList;
+        currentUser['chats'][widget.selectedNumber] = currentUserList;
+        Map<String, Object?> sMap = {widget.selectedNumber: selectedUser};
+        Map<String, Object?> cMap = {
+          auth.currentUser?.phoneNumber as String: currentUser
+        };
+        ref.update(cMap);
+        ref.update(sMap);
+        msgController.clear();
+      } else {
+        selectedUser['chats'][auth.currentUser?.phoneNumber] = selectedUserList;
+        currentUser['chats'][widget.selectedNumber] = currentUserList;
+        Map<String, Object?> sMap = {widget.selectedNumber: selectedUser};
+        Map<String, Object?> cMap = {
+          auth.currentUser?.phoneNumber as String: currentUser
+        };
+        ref.update(cMap);
+        ref.update(sMap);
+        msgController.clear();
+      }
     }
   }
 
@@ -70,9 +74,9 @@ class _ChatScreenState extends State<ChatScreen> {
           builder: (context, snapshot) {
             if (snapshot.hasData && snapshot.data?.snapshot.value != null) {
               userMap = snapshot.data?.snapshot.value as Map;
-              Map currentuser = userMap?[auth.currentUser?.phoneNumber];
+              Map currentUser = userMap?[auth.currentUser?.phoneNumber];
               Map selectedUser = userMap?[widget.selectedNumber];
-              List? chat = currentuser['chats'][widget.selectedNumber] ?? [];
+              List? chat = currentUser['chats'][widget.selectedNumber] ?? [];
               List? revChat = [];
               if (chat != null) {
                 revChat = List.from(chat.reversed);
@@ -135,7 +139,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                         IconButton(
                             onPressed: () {
-                              send(currentuser, selectedUser);
+                              send(currentUser, selectedUser);
                             },
                             icon: const Icon(Icons.send))
                       ],
