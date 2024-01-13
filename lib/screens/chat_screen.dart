@@ -17,7 +17,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   void send(Map currentUser, Map selectedUser) {
-    if (msgController.text.isNotEmpty) {
+    if (msgController.text.trim().isNotEmpty) {
       List sUserList = currentUser['chats'][widget.selectedNumber] ?? [];
 
       List cUserList =
